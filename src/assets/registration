@@ -1,0 +1,163 @@
+import React, { useState } from "react";
+import { States } from "./States";
+import axios from "axios";
+import Page from "./Page";
+
+const RegistrationForm = () => {
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [selectedState, setSelectedState] = useState("");
+  const [districts, setDistricts] = useState([]);
+  const [pincode, setPincode] = useState("");
+  const [pinCodeError, setPinCodeError] = useState("");
+  const [address, setAddress] = useState("");
+
+  let data = {name, phone, email, selectedState, districts, pincode,address};
+
+  let handleSubmit = (e)=>{
+   e.preventDefault();
+   axios.post(`http://localhost:8080/helpers`,data).then(()=>{
+    alert("successfully registered");
+   }).catch(()=>{
+    alert("invalid data");
+   })
+  }
+
+  const handleStateChange = (event) => {
+    const selectedStateCode = event.target.value;
+    const selectedStateObj = States.find((State) => State.code === selectedStateCode);
+
+    setSelectedState(selectedStateCode);
+    setDistricts(selectedStateObj ? selectedStateObj.districts : []);
+  };
+
+  const handlePinCodeChange = (event) => {
+    const enteredPinCode = event.target.value;
+    setPincode(enteredPinCode);
+
+    const pinCodeRegex = /^\d{6}$/;
+
+    if (!pinCodeRegex.test(enteredPinCode)) {
+      setPinCodeError("Invalid PIN Code");
+    } else {
+      setPinCodeError("");
+    }
+  };
+
+  return (
+    <div className="max-w-md mx-auto p-4 bg-gray-100 rounded-md shadow-md mt-5">
+      <h1 className="text-2xl font-semibold mb-4">Registration Form</h1>
+
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-600 mb-2">
+          Full Name:
+        </label>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Enter Full Name"
+          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
+        />
+      </div>
+
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-600 mb-2">
+          Phone:
+        </label>
+        <input
+          type="text"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          placeholder="Enter Phone Number"
+          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
+        />
+      </div>
+
+      <Page/>
+
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-600 mb-2">
+          Email:
+        </label>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Enter Email"
+          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
+        />
+      </div>
+
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-600 mb-2">
+          Select your State:
+        </label>
+        <select
+          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+          onChange={handleStateChange}
+          value={selectedState}
+        >
+          <option value="" disabled>Select a state</option>
+          {States.map((State) => (
+            <option key={State.code} value={State.code}>
+              {State.name}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-600 mb-2">
+          Select your District:
+        </label>
+        <select
+          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-indigo-500"
+        >
+          {districts.map((district) => (
+            <option key={district.id} value={district.id}>
+              {district.name}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-600 mb-2">
+          Enter your Pin Code:
+        </label>
+        <input
+          type="text"
+          value={pincode}
+          onChange={handlePinCodeChange}
+          placeholder="Enter Pin Code"
+          className={`w-full p-2 border rounded-md focus:outline-none ${
+            pinCodeError ? "border-red-500" : "border-gray-300"
+          }`}
+        />
+        {pinCodeError && <p className="text-red-500 text-sm mt-1">{pinCodeError}</p>}
+      </div>
+
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-600 mb-2">
+          Address:
+        </label>
+        <textarea
+          className="w-full p-2 border border-gray-300 rounded-md focus:outline-none resize-none"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+          rows="2"
+        ></textarea>
+      </div>
+
+      <div>
+        <button className="w-full h-10 bg-indigo-500 text-white rounded-md hover:bg-indigo-600" onClick={handleSubmit}>
+          Register
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default RegistrationForm
