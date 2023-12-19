@@ -1,5 +1,5 @@
 
-    export const state= [
+    export const States= [
         {
             "id": "1",
             "type": "Union Territory",
