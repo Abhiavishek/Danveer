@@ -20,8 +20,8 @@ const Sidebar = () => {
       <SidebarLink to="/dashboard/loginhelper" icon={<RiLoginCircleFill />} text="Login as Helper" />
       <SidebarLink to="/dashboard/registerdonar" icon={<GiArchiveRegister />} text="Register and Donate" />
       <SidebarLink to="" icon={<FcDonate />} text="Donate Money" />
-      <SidebarLink to="" icon={<MdVerified />} text="Verified Donor" />
-      <SidebarLink to="" icon={<LiaCashRegisterSolid />} text="Register as Recipient" />
+      <SidebarLink to="/dashboard/verifieddonar" icon={<MdVerified />} text="Verified Donor" />
+      <SidebarLink to="/dashboard/recipient" icon={<LiaCashRegisterSolid />} text="Register as Recipient" />
       <SidebarLink to="" icon={<GrDocumentVerified />} text="Verified Recipient" />
     </div>
   );

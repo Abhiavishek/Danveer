@@ -2,11 +2,12 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { LuEye } from "react-icons/lu";
 import { LuEyeOff } from "react-icons/lu";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 const LoginHelper = () => {
   const[epassword, setEpassword] = useState(false);
   const [password, setPassword] = useState('');
   const[email, setEmail] = useState('');
+  const navigate = useNavigate();
   const handleClick = ()=>{
     setEpassword(!epassword)
 }
@@ -15,6 +16,7 @@ const LoginHelper = () => {
    axios.post(`http://localhost:8080/helpers/verifyByEmail?email=${email}&password=${password}`).then((res)=>{
     localStorage.setItem('helpers',JSON.stringify(res.data.data));
     alert("verified Successfully")
+    navigate('/getdetails')
    }).catch(()=>{
     alert("Invalid Email and password");
    })

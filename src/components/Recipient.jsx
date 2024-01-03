@@ -1,32 +1,38 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { LuEye, LuEyeOff } from "react-icons/lu";
 
-const RegisterDonar = () => {
+const Recipient = () => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
   const [state, setState] = useState("");
   const [district, setDistrict] = useState("");
   const [pincode, setPincode] = useState("");
   const [pinCodeError, setPinCodeError] = useState("");
   const [address, setAddress] = useState("");
   const [country, setCountry] = useState("");
-  const [epassword, setEpassword] = useState(false);
-  const [password, setPassword] = useState("");
-  const [items, setItems] = useState("");
   const [profile_image, setProfile_image] = useState(null);
+  const [upiId, setUPIId] = useState("");
+  const [bankAccount, setBankAccount] = useState("");
+  const [ifscCode, setIFSCCode] = useState("");
 
-  const handleClick = () => {
-    setEpassword(!epassword);
+  let data = {
+    name,
+    phone,
+    state,
+    profile_image,
+    district,
+    pincode,
+    address,
+    country,
+    upiId,
+    bankAccount,
+    ifscCode,
   };
-
-  let data = { name, phone, email, state, items, profile_image, district, pincode, address, country, password };
 
   let handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post(`http://localhost:8080/donars`, data)
+      .post(`http://localhost:8080/recipients`, data)
       .then(() => {
         alert("Successfully registered");
         window.location.reload();
@@ -75,8 +81,10 @@ const RegisterDonar = () => {
   };
 
   return (
-    <div className="h-[88vh] w-[70vw] mx-auto p-[7px] bg-gray-100 rounded-md shadow-md mt-[10px]">
-      <h1 className="text-3xl font-semibold mb-[10px] text-center">Registration Form</h1>
+    <div className="h-[90vh] w-[70vw] mx-auto p-[7px] bg-gray-100 rounded-md shadow-md mt-[15px]">
+      <h1 className="text-3xl font-semibold mb-[10px] text-center">
+        Registration Form
+      </h1>
 
       <div className="grid grid-cols-2 gap-4">
         <div>
@@ -108,42 +116,6 @@ const RegisterDonar = () => {
 
           <div className="mb-2">
             <label className="block text-sm font-medium text-gray-600 mb-2">
-              Password :
-            </label>
-            <div className="flex items-center">
-              <input
-                className="w-full p-2 border-gray-300 rounded-md focus:outline-none"
-                placeholder="Password"
-                type={epassword ? "password" : "text"}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                }}
-              />
-              <div className="-ml-10 cursor-pointer">
-                {!epassword ? (
-                  <LuEye onClick={handleClick} />
-                ) : (
-                  <LuEyeOff onClick={handleClick} />
-                )}
-              </div>
-            </div>
-          </div>
-
-          <div className="mb-2">
-            <label className="block text-sm font-medium text-gray-600 mb-2">
-              Email:
-            </label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter Email"
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
-            />
-          </div>
-
-          <div className="mb-2">
-            <label className="block text-sm font-medium text-gray-600 mb-2">
               Profile Image:
             </label>
             <input
@@ -153,22 +125,18 @@ const RegisterDonar = () => {
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
             />
           </div>
-
           <div className="mb-2">
             <label className="block text-sm font-medium text-gray-600 mb-2">
-              Items :
+              City :
             </label>
             <input
               type="text"
-              value={items}
-              onChange={(e) => setItems(e.target.value)}
-              placeholder="Enter Your items to donate"
+              value={district}
+              placeholder="Enter City"
+              readOnly
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
             />
           </div>
-        </div>
-
-        <div>
           <div className="mb-2">
             <label className="block text-sm font-medium text-gray-600 mb-2">
               PinCode:
@@ -187,6 +155,23 @@ const RegisterDonar = () => {
               <p className="text-red-500 text-sm mt-1">{pinCodeError}</p>
             )}
           </div>
+          <div className="mb-2">
+            <label className="block text-sm font-medium text-gray-600 mb-2">
+              Address:
+            </label>
+            <textarea
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none resize-none"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              rows="2"
+            ></textarea>
+          </div>
+
+       
+        </div>
+
+        <div>
+        
 
           <div className="mb-2">
             <label className="block text-sm font-medium text-gray-600 mb-2">
@@ -214,43 +199,60 @@ const RegisterDonar = () => {
             />
           </div>
 
+        
+
           <div className="mb-2">
             <label className="block text-sm font-medium text-gray-600 mb-2">
-              City :
+              UPI ID:
             </label>
             <input
               type="text"
-              value={district}
-              placeholder="Enter City"
-              readOnly
+              value={upiId}
+              onChange={(e) => setUPIId(e.target.value)}
+              placeholder="Enter UPI ID"
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
             />
           </div>
 
           <div className="mb-2">
             <label className="block text-sm font-medium text-gray-600 mb-2">
-              Address:
+              Bank Account Number:
             </label>
-            <textarea
-              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none resize-none"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              rows="2"
-            ></textarea>
+            <input
+              type="text"
+              value={bankAccount}
+              onChange={(e) => setBankAccount(e.target.value)}
+              placeholder="Enter Bank Account Number"
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
+            />
           </div>
 
-          <div>
-            <button
-              className="w-full h-10 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 focus:outline-none"
-              onClick={handleSubmit}
-            >
-              Register
-            </button>
+          <div className="mb-2">
+            <label className="block text-sm font-medium text-gray-600 mb-2">
+              IFSC Code:
+            </label>
+            <input
+              type="text"
+              value={ifscCode}
+              onChange={(e) => setIFSCCode(e.target.value)}
+              placeholder="Enter IFSC Code"
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
+            />
           </div>
+          <div className=" w-full flex mt-[59px]">
+          <button
+            className="w-full h-10 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 focus:outline-none"
+            onClick={handleSubmit}
+          >
+            Register
+          </button>
         </div>
+        </div>
+
+       
       </div>
     </div>
   );
 };
 
-export default RegisterDonar;
+export default Recipient;
