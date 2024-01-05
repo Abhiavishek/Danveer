@@ -12,7 +12,7 @@ const Recipient = () => {
   const [country, setCountry] = useState("");
   const [profile_image, setProfile_image] = useState(null);
   const [upiId, setUPIId] = useState("");
-  const [bankAccount, setBankAccount] = useState("");
+  const [bankAccountNumber, setBankAccountNumber] = useState("");
   const [ifscCode, setIFSCCode] = useState("");
 
   let data = {
@@ -25,7 +25,7 @@ const Recipient = () => {
     address,
     country,
     upiId,
-    bankAccount,
+    bankAccountNumber,
     ifscCode,
   };
 
@@ -220,8 +220,8 @@ const Recipient = () => {
             </label>
             <input
               type="text"
-              value={bankAccount}
-              onChange={(e) => setBankAccount(e.target.value)}
+              value={bankAccountNumber}
+              onChange={(e) => setBankAccountNumber(e.target.value)}
               placeholder="Enter Bank Account Number"
               className="w-full p-2 border border-gray-300 rounded-md focus:outline-none"
             />

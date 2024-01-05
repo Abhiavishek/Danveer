@@ -3,44 +3,48 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import defaultProfileImage from '../assets/images.png';
 
-const DonarProfile = () => {
+const RecipientProfile = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [email, setEmail] = useState("");
+  const [ upiId, setUpiId] = useState("");
   const [state, setState] = useState("");
   const [district, setDistrict] = useState("");
   const [pincode, setPincode] = useState("");
   const [address, setAddress] = useState("");
   const [country, setCountry] = useState("");
   const [password, setPassword] = useState();
-  const [items, setItems] = useState("");
+  const [status, setStatus] = useState("");
   const [verified, setVerified] = useState();
   const [id, setId] = useState();
+  const[bankAccountNumber, setBankAccountNumber]=useState("");
+  const[ifscCode, setIfscCode]=useState("");
   const [profileData, setProfileData] = useState();
   const { index } = useParams();
 
   let navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/donars/${index}`)
+    axios.get(`http://localhost:8080/recipients/${index}`)
       .then((res) => {
         setLoading(false);
         setProfileData(res.data.data);
-        const { name, phone, address, country, district, email, items, pincode, state, id, password ,verified} = res.data.data;
+        const { name, phone, address, country, district, upiId, status, pincode, state, id, password ,verified,bankAccountNumber,ifscCode} = res.data.data;
         setName(name);
         setPhone(phone);
         setAddress(address);
         setCountry(country);
         setDistrict(district);
-        setEmail(email);
-        setItems(items);
+        setUpiId(upiId);
+        setStatus(status);
         setPincode(pincode);
         setState(state);
         setId(id);
         setPassword(password);
         setVerified(verified);
+        setBankAccountNumber(bankAccountNumber);
+        setIfscCode(ifscCode)
       })
       .catch(() => {
         setError('Something went wrong');
@@ -49,10 +53,10 @@ const DonarProfile = () => {
   }, [index]);
 
   const handleDelete = () => {
-    axios.delete(`http://localhost:8080/donars/${index}`)
+    axios.delete(`http://localhost:8080/recipients/${index}`)
       .then(() => {
         alert("Spam Donar deleted");
-        navigate('/getdetails')
+        navigate('/getrecipient')
       })
       .catch(() => {
         alert("Something went wrong");
@@ -60,8 +64,8 @@ const DonarProfile = () => {
   };
 
   const handleVerified = () => {
-    const data = { name, email, phone, state, country, verified:1, pincode, address, items, id, district, password };
-    axios.put(`http://localhost:8080/donars`, data)
+    const data = { name, upiId, phone, state, country, verified:1, pincode, address, status, id, district, bankAccountNumber,ifscCode };
+    axios.put(`http://localhost:8080/recipients`, data)
       .then(() => {
         alert("Donar Verified Successfully");
       })
@@ -89,16 +93,24 @@ const DonarProfile = () => {
                 <td><input type="text" value={name} onChange={(e) => setName(e.target.value)} className="input-field" /></td>
               </tr>
               <tr>
-                <td className="font-semibold">Email:</td>
-                <td><input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="input-field" /></td>
+                <td className="font-semibold">upiId:</td>
+                <td><input type="text" value={upiId} onChange={(e) => setUpiId(e.target.value)} className="input-field" /></td>
+              </tr>
+              <tr>
+                <td className="font-semibold">Bank Account Number:</td>
+                <td><input type="text" value={bankAccountNumber} onChange={(e) => setBankAccountNumber(e.target.value)} className="input-field" /></td>
+              </tr>
+              <tr>
+                <td className="font-semibold">ifsc:</td>
+                <td><input type="text" value={ifscCode} onChange={(e) => setIfscCode(e.target.value)} className="input-field" /></td>
               </tr>
               <tr>
                 <td className="font-semibold">Phone:</td>
                 <td><input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} className="input-field" /></td>
               </tr>
               <tr>
-                <td className="font-semibold">Items:</td>
-                <td><input type="text" value={items} onChange={(e) => setItems(e.target.value)} className="input-field" /></td>
+                <td className="font-semibold">Status:</td>
+                <td><input type="text" value={status} onChange={(e) => setStatus(e.target.value)} className="input-field" /></td>
               </tr>
               <tr>
                 <td className="font-semibold">Country:</td>
@@ -149,4 +161,4 @@ const DonarProfile = () => {
   );
 };
 
-export default DonarProfile;
+export default RecipientProfile;

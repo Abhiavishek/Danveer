@@ -5,7 +5,8 @@ import LoginHelper from './LoginHelper'
 import RegisterDonar from './RegisterDonar'
 import VerifiedDonar from './VerifiedDonar'
 import Recipient from './Recipient'
-
+import VerifiedRecipient from './verifiedRecipient'
+import RecipientVerified from './RecipientVerified'
 const DashBoard = () => {
   return (
     <div className='h-[100vh] w-[100vw] flex'>
@@ -18,6 +19,8 @@ const DashBoard = () => {
         <Route path='/registerdonar' element={<RegisterDonar/>}/>
         <Route path='/verifieddonar' element={<VerifiedDonar/>}/>
         <Route path='/recipient' element={<Recipient/>}/>
+        <Route path='/donatemoney' element={<VerifiedRecipient/>}/>
+        <Route path='/recipientverified' element={<RecipientVerified/>}/>
     </Routes>
     </div>
     </div>

@@ -19,10 +19,10 @@ const Sidebar = () => {
     <div className="h-[90vh] w-[20vw] bg-gray-100 relative flex flex-col justify-center">
       <SidebarLink to="/dashboard/loginhelper" icon={<RiLoginCircleFill />} text="Login as Helper" />
       <SidebarLink to="/dashboard/registerdonar" icon={<GiArchiveRegister />} text="Register and Donate" />
-      <SidebarLink to="" icon={<FcDonate />} text="Donate Money" />
+      <SidebarLink to="/dashboard/donatemoney" icon={<FcDonate />} text="Donate Money" />
       <SidebarLink to="/dashboard/verifieddonar" icon={<MdVerified />} text="Verified Donor" />
       <SidebarLink to="/dashboard/recipient" icon={<LiaCashRegisterSolid />} text="Register as Recipient" />
-      <SidebarLink to="" icon={<GrDocumentVerified />} text="Verified Recipient" />
+      <SidebarLink to="/dashboard/recipientverified" icon={<GrDocumentVerified />} text="Verified Recipient" />
     </div>
   );
 };
